@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Personal Info</title>
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    * { box-sizing:border-box }
+    body {
+      margin:0; padding:2rem;
+      font-family:'Helvetica Neue',sans-serif;
+      background:#f5f5f5; color:#333;
+    }
+    .profile-section {
+      max-width:71.188rem; 
+      margin:0 auto;
+      background:#fff; 
+      border-radius:12px;
+      padding:2rem; 
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+    .profile-section h2 {
+        margin:0; 
+        font-size:1.5rem 
+    }
+    .subtitle {
+      margin:0.25rem 0 1.5rem; 
+      color:#888; 
+      font-size:0.95rem;
+    }
+    .profile-section hr {
+      border:none; 
+      border-top:1px solid #e0e0e0; 
+      margin:1.5rem 0;
+    }
+
+    .profile-form {
+        display: grid;
+        /* grid-template-columns: 200px 1fr auto; */
+        justify-items: stretch;
+        column-gap: 24px;
+        row-gap: 1.5rem;
+        align-items: start;
+    }
+
+
+    /* labels always in col 1 */
+    .label-cell { 
+        grid-column:1; 
+        text-align:right; 
+        padding-top:.4rem 
+    }
+    .label-cell label { 
+        font-weight:500; 
+        text-transform:capitalize 
+    }
+    .help-text { 
+        display:block; 
+        margin-top:.25rem; 
+        color:#aaa; 
+        font-size:.85rem 
+    }
+
+    /* upload box goes in col 2 */
+    .upload-area {
+      grid-column:2;
+      width:365px; height:140px;
+      border:2px dashed #ddd; border-radius:8px;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      color:#888; position:relative;
+      cursor:pointer; transition:background .2s;
+    }
+    .upload-area:hover { background:#fafafa }
+    .upload-area input {
+      position:absolute; width:100%; height:100%;
+      top:0; left:0; opacity:0; cursor:pointer;
+    }
+    .upload-area .fa-cloud-upload-alt {
+      font-size:1.8rem; margin-bottom:.5rem;
+    }
+    .upload-area .text {
+      text-align:center; font-size:.95rem; line-height:1.2;
+    }
+    .upload-area .text strong { color:#f60 }
+
+    /* avatar preview goes in col 3 */
+    .avatar-preview {
+      grid-column:3;
+      display:flex; align-items:flex-start;
+    }
+    .avatar-preview img {
+      width:120px; height:120px;
+      border-radius:50%; object-fit:cover;
+      border:2px solid #eee;
+    }
+
+    /* every standard input spans col 2–3 */
+    .input-cell {
+      grid-column:2 / span 2;
+    }
+    .input-cell input,
+    .input-cell select {
+        width:100%;
+      max-width:32rem;
+      height:2.5rem; padding:0 1rem;
+      border:1px solid #ccc; border-radius:8px;
+      font-size:1rem; transition:border-color .2s;
+      background:#fff;
+    }
+    .input-cell input:focus,
+    .input-cell select:focus {
+      outline:none; border-color:#888;
+    }
+
+    /* email icon */
+    .with-icon { position:relative }
+    .with-icon .fa-envelope {
+      position:absolute; left:1rem; top:50%;
+      transform:translateY(-50%); color:#888;
+    }
+    .with-icon input { padding-left:2.5rem }
+
+/* .input-cell already does: grid-column: 2 / span 2; */
+
+    /* Make the date‑picker container exactly the same size as your other inputs */
+    .date-picker {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    }
+
+    /* Style it identically to other inputs */
+    .date-picker input[type="date"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    width: 32rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    padding-right: 2.5rem; /* room for the icon */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.2s;
+    }
+    .date-picker input[type="date"]:focus {
+    outline: none;
+    border-color: #888;
+    }
+
+    /* Keep the native picker clickable */
+    .date-picker input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    top: 0; right: 0;
+    width: 2.5rem; height: 100%;
+    cursor: pointer;
+    z-index: 2;
+    }
+
+    /* Your calendar icon inside the field */
+    .date-picker i {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+    }
+
+
+    /* buttons row spans 2–4 */
+    .form-actions {
+      grid-column:2 / span 2;
+      display:flex; justify-content:flex-end;
+      gap:1rem; margin-top:1rem;
+    }
+    .btn {
+      padding:.6rem 1.2rem; border-radius:8px;
+      font-size:1rem; cursor:pointer;
+      transition:background .2s,color .2s;
+    }
+    .btn-cancel {
+      background:#fff; border:1px solid #333; color:#333;
+    }
+    .btn-cancel:hover { background:#f0f0f0 }
+    .btn-save {
+      background:#333; border:none; color:#fff;
+    }
+    .btn-save:hover { background:#000 }
+
+    @media(max-width:700px){
+      .profile-form { grid-template-columns:1fr; }
+      .form-actions { justify-content:center }
+      .upload-area,.input-cell input { max-width:100%!important }
+      .avatar-preview { justify-content:center }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="profile-section">
+    <h2>Personal info</h2>
+    <p class="subtitle">Update your photo and personal details here.</p>
+    <hr>
+
+    <form class="profile-form"
+          action="${pageContext.request.contextPath}/profile"
+          method="post"
+          enctype="multipart/form-data">
+
+      <!-- 1) Label -->
+      <div class="label-cell">
+        <label>Your photo</label>
+        <span class="help-text">This will be displayed on your profile.</span>
+      </div>
+
+      <!-- 2) Upload box -->
+      <div class="upload-area">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <div class="text">
+          <strong>Click to upload</strong><br/>
+          or drag and drop<br/>
+          SVG, PNG, JPG or GIF (max. 800×400px)
+        </div>
+        <input id="avatarInput" type="file" name="avatar" accept="image/*"/>
+      </div>
+
+      <!-- 3) Avatar preview -->
+      <div class="avatar-preview">
+        <c:set var="avatarUrl"
+               value="${not empty profile.avatarPath
+                        ? pageContext.request.contextPath + '/' + profile.avatarPath
+                        : 'https://i.pravatar.cc/150?img=47'}"/>
+        <img id="avatarImg" src="${avatarUrl}" alt="Your Avatar"/>
+      </div>
+
+      <!-- Username -->
+      <div class="label-cell"><label for="username">Username</label></div>
+      <div class="input-cell">
+        <input id="username" name="username" type="text"
+               value="${fn:escapeXml(profile.username)}"/>
+      </div>
+
+      <!-- Name -->
+      <div class="label-cell"><label for="name">Name</label></div>
+      <div class="input-cell">
+        <input id="name" name="name" type="text"
+               value="${fn:escapeXml(profile.name)}"/>
+      </div>
+
+      <!-- Email -->
+      <div class="label-cell"><label for="email">Email Address</label></div>
+      <div class="input-cell with-icon">
+        <i class="fas fa-envelope"></i>
+        <input id="email" name="email" type="email"
+               value="${fn:escapeXml(profile.email)}"/>
+      </div>
+
+      <!-- About -->
+      <div class="label-cell"><label for="about">About</label></div>
+      <div class="input-cell">
+        <input id="about" name="about" type="text"
+               value="${fn:escapeXml(profile.about)}"/>
+      </div>
+
+      <!-- Date Of Birth -->
+        <!-- Label -->
+        <div class="label-cell">
+            <label for="dob">Date Of Birth</label>
+        </div>
+        
+        <!-- Input cell spans columns 2–3 -->
+        <div class="input-cell">
+            <div class="date-picker">
+            <input
+                id="dob"
+                name="dob"
+                type="date"
+                value="<fmt:formatDate value='${profile.dob}' pattern='yyyy-MM-dd'/>"
+            />
+            <i class="fas fa-calendar-alt"></i>
+            </div>
+        </div>
+        
+  
+
+      <!-- New Password -->
+      <div class="label-cell"><label for="password">New Password</label></div>
+      <div class="input-cell">
+        <input id="password" name="password" type="password"
+               placeholder="Enter your new password"/>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-cancel"
+                onclick="location.href='${pageContext.request.contextPath}/';">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-save">Save</button>
+      </div>
+    </form>
+  </section>
+
+  <script>
+    // Live avatar preview
+    document.getElementById('avatarInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => document.getElementById('avatarImg').src = reader.result;
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

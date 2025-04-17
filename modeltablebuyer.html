@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Most Sold Models</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pIVp1H0vQ0tz1zp9I9j9cni+oaLTV9QOq/Y+0KDaYfXwHn6ngytvlHTBNGFnC47DWhd8Utk2VYkZ7NqGiSvYKg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    /* Container */
+    .models-section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-width: 71.188rem;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+    .models-section h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #222;
+    }
+    .models-section hr {
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      margin: 1rem 0 1.5rem;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .controls > * {
+      flex-shrink: 0;
+    }
+
+    /* Search */
+    .search-bar {
+      flex: 1 1 200px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+      color: #666;
+    }
+    .search-bar i { margin-right: 0.75rem; }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      color: #333;
+    }
+    .search-bar input::placeholder { color: #aaa; }
+    .search-bar input:focus { outline: none; }
+
+    /* Dropdown filters */
+    .filter-dropdown {
+      position: relative;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .filter-dropdown:hover { background: #f0f0f0; }
+    .filter-dropdown select {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      color: #444;
+      cursor: pointer;
+    }
+    .filter-dropdown select:focus { outline: none; }
+    .filter-dropdown i {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #666;
+      font-size: 0.8rem;
+    }
+
+    /* Range inputs */
+    .filter-range {
+      display: flex;
+      align-items: center;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .filter-range:hover { background: #f0f0f0; }
+    .filter-range .range-label {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      color: #666;
+      white-space: nowrap;
+    }
+    .filter-range input {
+      width: 80px;
+      border: none;
+      background: transparent;
+      padding: 0.5rem;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: right;
+    }
+    .filter-range input:focus { outline: none; }
+
+    /* Apply button */
+    .apply-btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .apply-btn:hover { background: #333; }
+
+    /* View button */
+    .view-btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .view-btn:hover { background: #333; }
+
+    /* Table wrapper */
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    /* Table */
+    .models-table {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+    }
+    .models-table th,
+    .models-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .models-table th {
+      font-size: 0.85rem;
+      color: #666;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .models-table td {
+      font-size: 0.95rem;
+      color: #333;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .models-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .models-section { padding: 1rem; margin: 1rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .controls > * { width: 100%; }
+      .filter-range { justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="models-section">
+    <h2>Most Sold Models</h2>
+    <hr>
+
+    <!-- FILTER FORM -->
+    <form method="get" class="controls">
+      <!-- Search -->
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input name="search"
+               type="text"
+               placeholder="Search for anything.."
+               value="${fn:escapeXml(search)}"/>
+      </div>
+
+      <!-- Model Type -->
+      <div class="filter-dropdown">
+        <select name="modelType">
+          <option value="">Model type</option>
+          <option value="computer-vision"
+            <c:if test="${modelType == 'computer-vision'}">selected</c:if>>
+            Computer Vision
+          </option>
+          <option value="nlp"
+            <c:if test="${modelType == 'nlp'}">selected</c:if>>
+            Natural Language Processing
+          </option>
+          <option value="reinforcement"
+            <c:if test="${modelType == 'reinforcement'}">selected</c:if>>
+            Reinforcement Learning
+          </option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+
+      <!-- Min Price -->
+      <div class="filter-range">
+        <span class="range-label">Min</span>
+        <input name="min"
+               type="number"
+               placeholder="0"
+               value="${fn:escapeXml(min)}"/>
+      </div>
+
+      <!-- Max Price -->
+      <div class="filter-range">
+        <span class="range-label">Max</span>
+        <input name="max"
+               type="number"
+               placeholder="9999"
+               value="${fn:escapeXml(max)}"/>
+      </div>
+
+      <!-- Sort By -->
+      <div class="filter-dropdown">
+        <select name="sortBy">
+          <option value="">Sort By</option>
+          <option value="sales-desc"
+            <c:if test="${sortBy == 'sales-desc'}">selected</c:if>>
+            Sales: High→Low
+          </option>
+          <option value="sales-asc"
+            <c:if test="${sortBy == 'sales-asc'}">selected</c:if>>
+            Sales: Low→High
+          </option>
+          <option value="date-desc"
+            <c:if test="${sortBy == 'date-desc'}">selected</c:if>>
+            Date: Newest
+          </option>
+          <option value="date-asc"
+            <c:if test="${sortBy == 'date-asc'}">selected</c:if>>
+            Date: Oldest
+          </option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+
+      <!-- Apply -->
+      <button type="submit" class="apply-btn">Apply</button>
+    </form>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+      <table class="models-table">
+        <thead>
+          <tr>
+            <th>SN</th><th>Model Name</th><th>Category</th>
+            <th>Listed Date</th><th>Price (USD)</th>
+            <th>Seller</th><th>Total Revenue</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="m" items="${modelsList}">
+            <tr>
+              <td><c:out value="${m.sn}"/></td>
+              <td><c:out value="${m.modelName}"/></td>
+              <td><c:out value="${m.category}"/></td>
+              <td><fmt:formatDate value="${m.listedDate}" pattern="yyyy-MM-dd"/></td>
+              <td>$<c:out value="${m.price}"/></td>
+              <td>@<c:out value="${m.seller}"/></td>
+              <td>$<c:out value="${m.totalRevenue}"/></td>
+              <td>
+                <a href="view-model?id=${m.sn}" class="view-btn">View</a>
+              </td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</body>
+</html>
