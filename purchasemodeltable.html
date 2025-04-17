@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Purchased Models</title>
+  <style>
+    .purchased-overview {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 71.188rem;
+    }
+    .purchased-overview h2 {
+      margin: 0 0 1rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    .purchased-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    .purchased-table th,
+    .purchased-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .purchased-table th {
+      font-size: 0.875rem;
+      color: #666;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .purchased-table td {
+      font-size: 0.95rem;
+      color: #333;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .view-btn {
+      background: #111;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <section class="purchased-overview">
+    <h2>Purchased Models</h2>
+    <div class="table-wrapper">
+      <table class="purchased-table">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Model Name</th>
+            <th>Category</th>
+            <th>Price (USD)</th>
+            <th>Seller</th>
+            <th>Purchased Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="m" items="${purchasedModels}">
+            <tr>
+              <td><c:out value="${m.sn}"/></td>
+              <td><c:out value="${m.modelName}"/></td>
+              <td><c:out value="${m.category}"/></td>
+              <td>$<c:out value="${m.price}"/></td>
+              <td>@<c:out value="${m.sellerUsername}"/></td>
+              <td><fmt:formatDate value="${m.purchasedDate}" pattern="yyyy-MM-dd"/></td>
+              <td>
+                <a href="view-model?id=${m.sn}" class="view-btn">View</a>
+              </td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</body>
+</html>
