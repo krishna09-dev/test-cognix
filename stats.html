@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stats Overview</title>
+  <style>
+    /* container */
+    .stats-overview {
+      background: #fff;
+      border-top-right-radius: 2rem;
+      border-top-left-radius: 2rem;
+      border-bottom-right-radius: 0.75rem;
+      border-bottom-left-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      width: 71.188rem;
+      border: 1px solid #222;
+    }
+    .stats-overview h2 {
+      margin: 0 0 1rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+
+    /* grid */
+    .stats-cards {
+      display: grid;
+      max-width: 68.188rem;
+      grid-template-columns: repeat(auto-fit, minmax(254px, 1fr));
+      gap: 1rem;
+    }
+
+    /* each card */
+    .stat-card {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .stat-card p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: #666;
+    }
+    .stat-card h3 {
+      margin: 0.5rem 0 0;
+      font-size: 0.875rem;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <!-- put this wherever in your layout -->
+  <section class="stats-overview">
+    <h2>Stats Overview</h2>
+    <div class="stats-cards">
+      <div class="stat-card">
+        <p>Total Listings</p>
+        <h3><c:out value="${totalListings}"/></h3>
+      </div>
+
+      <div class="stat-card">
+        <p>Total Sales</p>
+        <h3><c:out value="${totalSales}" /></h3>
+      </div>
+
+      <div class="stat-card">
+        <p>Total Earnings</p>
+        <h3>$<c:out value="${totalEarnings}" /></h3>
+      </div>
+
+      <div class="stat-card">
+        <p>Most Popular Model</p>
+        <h3><c:out value="${mostPopular}" /></h3>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

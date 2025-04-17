@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seller Sidebar</title>
+  <style>
+    /* ---- Sidebar container ---- */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+    }
+    .sidebar {
+      width: 238px;
+      padding-left: 1.5rem;
+      padding-top: 2rem;
+      background-color: #F1EDE9;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: space-between; */
+      justify-content: space-between;
+      padding-bottom: 1.5rem;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+    .sidebar__head__component{
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        width: 9.938rem;
+        align-items: center;
+    }
+
+    /* ---- Logo / Title ---- */
+    .sidebar__header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 38.063rem;
+      padding-left: 1.5rem;
+    }
+    .sidebar__header i {
+      font-size: 0.875rem;
+      margin-right: 0.75rem;
+    }
+    .sidebar__header .title {
+      font-size: 0.875rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    /* ---- Navigation ---- */
+    .sidebar__nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex-grow: 1;
+    }
+    .sidebar__nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 0.875rem;
+      padding-right: 2.25rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-radius: 0.5rem;
+    
+    }
+    .sidebar__nav-item i {
+      font-size: 1.1rem;
+
+    }
+    .sidebar__nav-item:hover {
+      background-color: #2a2a2a;
+    }
+    .sidebar__nav-item.active {
+      background-color: #fff;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    /* ---- Profile Footer ---- */
+    .sidebar__profile {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background-color: #fff;
+      border-radius: 12px;
+    }
+    .profile-info {
+      /* max-width: 11.375rem; */
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .profile-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-info .name {
+      display: block;
+      font-weight: 600;
+      color: #1a1a1a;
+        font-size: 0.875rem;
+    }
+    .profile-info .role {
+      display: block;
+      font-size: 0.5rem;
+      color: #666;
+    }
+    .sidebar__profile i {
+      font-size: 1.2rem;
+      color: #666;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <!-- Top logo/title -->
+    <div class="sidebar__head__component">
+        <div class="sidebar__header">
+            <img src="/nav-icons/seller logo.svg" alt="Logo" />
+        </div>
+
+        <!-- Nav links -->
+        <ul class="sidebar__nav">
+        <li class="sidebar__nav-item active">
+            <img src="/nav-icons/Home.svg" alt="Dashboard" />
+            <span>Dashboard</span>
+        </li>
+        <li class="sidebar__nav-item">
+            <img src="/nav-icons/Folder.svg" alt="Dashboard" />
+            <span>Models</span>
+        </li>
+        <li class="sidebar__nav-item">
+            <img src="/nav-icons/seller icons oder.svg" alt="Dashboard" />
+            <span>Orde's</span>
+        </li>
+        <li class="sidebar__nav-item">
+            <img src="/nav-icons/File.svg" alt="Dashboard" />
+            <span>Reports</span>
+        </li>
+        </ul>
+    </div>
+
+    <!-- Profile / settings -->
+    <div class="sidebar__profile">
+      <div class="profile-info">
+        <img src="https://i.pravatar.cc/40?img=12" alt="Krishna Singh">
+        <div>
+          <span class="name">Krishna Singh</span>
+          <span class="role">AI Model Expert</span>
+        </div>
+      </div>
+      <img src="/nav-icons/sharp.svg" alt="Settings" />
+    </div>
+  </aside>
+
+</body>
+</html>

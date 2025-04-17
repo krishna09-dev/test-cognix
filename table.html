@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stats & Top Models</title>
+  <style>
+    /* …your existing .stats-overview styles… */
+
+    /* Container for the table */
+    .models-overview {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .models-overview h2 {
+      margin: 0 0 1rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    /* Table reset */
+    .models-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px; /* ensure horizontal scroll on small screens */
+    }
+    .models-table th,
+    .models-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .models-table th {
+      font-size: 0.875rem;
+      color: #666;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .models-table td {
+      font-size: 0.95rem;
+      color: #333;
+      border-bottom: 1px solid #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- your stats-overview section here… -->
+
+  <!-- Most Sold Models -->
+  <section class="models-overview">
+    <h2>Most Sold Models</h2>
+    <div class="table-wrapper">
+      <table class="models-table">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Model Name</th>
+            <th>Category</th>
+            <th>Listed Date</th>
+            <th>Price (USD)</th>
+            <th>Total Sales</th>
+            <th>Total Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="m" items="${topModels}">
+            <tr>
+              <td><c:out value="${m.sn}" /></td>
+              <td><c:out value="${m.modelName}" /></td>
+              <td><c:out value="${m.category}" /></td>
+              <td><fmt:formatDate value="${m.listedDate}" pattern="yyyy-MM-dd" /></td>
+              <td>$<c:out value="${m.price}" /></td>
+              <td><c:out value="${m.totalSales}" /></td>
+              <td>$<c:out value="${m.totalRevenue}" /></td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</body>
+</html>
